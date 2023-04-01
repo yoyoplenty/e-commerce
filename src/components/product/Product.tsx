@@ -15,7 +15,6 @@ const Product = ({ product }: any) => {
 
   const handleAddToCart = async (productId: any, quantity: any) => {
     const item: any = await commerce.cart.add(productId, quantity);
-
     setCart(item.cart);
   };
 

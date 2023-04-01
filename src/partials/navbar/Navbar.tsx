@@ -1,17 +1,18 @@
+import { Link, useLocation } from "react-router-dom";
 import { ShoppingCart } from "@material-ui/icons";
 import { AppBar, Badge, IconButton, Toolbar, Typography } from "@material-ui/core";
 
 import useStyles from "./styles";
 import { useContext } from "react";
 import { CartContext } from "../../context/cart";
-import { Link } from "react-router-dom";
 
 const logo = require("../../assets/commerce-logo.webp");
 
 const Navbar = () => {
   const styles = useStyles();
-  const { cart }: any = useContext(CartContext);
+  const location = useLocation();
 
+  const { cart }: any = useContext(CartContext);
   const totalItems = cart.total_items;
 
   return (
@@ -27,14 +28,16 @@ const Navbar = () => {
 
           <div className={styles.grow} />
 
-          <div className="">
-            <Link to={"/cart"} className="nav-link">
-              <IconButton aria-label="show cart items" color="inherit">
-                <Badge badgeContent={totalItems} color="secondary">
-                  <ShoppingCart />
-                </Badge>
-              </IconButton>
-            </Link>
+          <div className="px-1">
+            {location.pathname !== "/cart" && (
+              <Link to={"/cart"} className="nav-link">
+                <IconButton aria-label="show cart items" color="inherit">
+                  <Badge badgeContent={totalItems} color="secondary">
+                    <ShoppingCart />
+                  </Badge>
+                </IconButton>
+              </Link>
+            )}
           </div>
         </Toolbar>
       </AppBar>

@@ -1,9 +1,21 @@
+import { useContext } from "react";
 import { Button, Grid, Typography } from "@material-ui/core";
+
 import CartItem from "./cart-item";
 import { CartStyle } from "../../partials";
 
+import { commerce } from "../../lib/commerce";
+import { CartContext } from "../../context/cart";
+
 const FilledCart = ({ cart }: any) => {
   const styles = CartStyle();
+
+  const { setCart }: any = useContext<any>(CartContext);
+
+  const handleEmptyCart = async () => {
+    const response = await commerce.cart.empty();
+    setCart(response.cart);
+  };
 
   return (
     <>
@@ -23,7 +35,7 @@ const FilledCart = ({ cart }: any) => {
             Empty cart
           </Button>
 
-          <Button className={styles.emptyButton} size="large" type="button" variant="contained" color="primary">
+          <Button className={styles.emptyButton} size="large" type="button" variant="contained" color="primary" onClick={handleEmptyCart}>
             Checkout
           </Button>
         </div>
