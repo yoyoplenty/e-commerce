@@ -7,11 +7,21 @@ import Typography from "@material-ui/core/Typography";
 import { AddShoppingCart } from "@material-ui/icons";
 
 import useStyles from "./product-styles";
+import { useContext } from "react";
+import { commerce } from "../../lib/commerce";
+import { CartContext } from "../../context/cart";
 
-const Product = ({ product, onAddToCart }: any) => {
+const Product = ({ product }: any) => {
+  const styles = useStyles();
   const { id, name, image, price, description } = product;
 
-  const styles = useStyles();
+  const { setCart }: any = useContext(CartContext);
+
+  const handleAddToCart = async (productId: any, quantity: any) => {
+    const item: any = await commerce.cart.add(productId, quantity);
+
+    setCart(item.cart);
+  };
 
   return (
     <Card className={styles.root}>
@@ -28,7 +38,7 @@ const Product = ({ product, onAddToCart }: any) => {
       </CardContent>
 
       <CardActions disableSpacing className={styles.cardActions}>
-        <IconButton aria-label="Add to Cart" onClick={() => onAddToCart(id, 1)}>
+        <IconButton aria-label="Add to Cart" onClick={() => handleAddToCart(id, 1)}>
           <AddShoppingCart />
         </IconButton>
       </CardActions>

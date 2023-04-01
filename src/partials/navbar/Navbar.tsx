@@ -2,10 +2,17 @@ import { ShoppingCart } from "@material-ui/icons";
 import { AppBar, Badge, IconButton, Toolbar, Typography } from "@material-ui/core";
 
 import useStyles from "./styles";
+import { useContext } from "react";
+import { CartContext } from "../../context/cart";
+
 const logo = require("../../assets/commerce-logo.webp");
 
-const Navbar = ({ totalItems }: any) => {
+const Navbar = () => {
   const styles = useStyles();
+
+  const { cart }: any = useContext(CartContext);
+
+  const totalItems = cart.total_items;
 
   return (
     <>

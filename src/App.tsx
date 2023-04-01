@@ -1,38 +1,22 @@
-import { useEffect, useState } from "react";
-import { Products } from "./components";
-import { commerce } from "./lib/commerce";
-import { Cart, Navbar } from "./partials";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+import { Cart, Navbar, Products } from "./partials";
+import { CartContextProvider, ProductContextProvider } from "./context";
 
 function App() {
-  const [products, setProducts] = useState([]);
-  const [cart, setCart]: any = useState([]);
-
-  const fetchProducts = async () => {
-    const { data }: any = await commerce.products.list();
-
-    setProducts(data);
-  };
-
-  const fetchCart = async () => {
-    setCart(await commerce.cart.retrieve());
-  };
-
-  const handleAddToCart = async (productId: any, quantity: any) => {
-    const item: any = await commerce.cart.add(productId, quantity);
-
-    setCart(item.cart);
-  };
-
-  useEffect(() => {
-    fetchProducts();
-    fetchCart();
-  }, []);
-
   return (
     <>
-      <Navbar totalItems={cart.total_items} />
-      {/* <Products products={products} onAddToCart={handleAddToCart} /> */}
-      <Cart cartData={cart} />
+      <ProductContextProvider>
+        <CartContextProvider>
+          <Router>
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<Products />} />
+              <Route path="/cart" element={<Cart />} />
+            </Routes>
+          </Router>
+        </CartContextProvider>
+      </ProductContextProvider>
     </>
   );
 }

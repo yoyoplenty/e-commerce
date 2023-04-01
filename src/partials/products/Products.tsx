@@ -1,11 +1,16 @@
+import { useContext } from "react";
 import { Grid } from "@material-ui/core";
+
+import useStyles from "./styles";
+
+import { Product } from "../../components";
 import { iProduct } from "../../data/product";
-import Product from "./Product";
+import { ProductContext } from "../../context/product";
 
-import useStyles from "./products-style";
-
-const Products = ({ products, onAddToCart }: any) => {
+const Products = () => {
   const styles = useStyles();
+
+  const { products }: any = useContext(ProductContext);
 
   return (
     <main className={`${styles.content} mt-5`}>
@@ -13,7 +18,7 @@ const Products = ({ products, onAddToCart }: any) => {
         <Grid container justify-content="center" spacing={4}>
           {products.map((product: iProduct) => (
             <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
-              <Product product={product} onAddToCart={onAddToCart} />
+              <Product product={product} />
             </Grid>
           ))}
         </Grid>
