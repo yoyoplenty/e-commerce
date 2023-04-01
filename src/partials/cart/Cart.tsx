@@ -8,7 +8,6 @@ import { EmptyCart, FilledCart } from "../../components";
 
 const Cart = () => {
   const styles = useStyles();
-
   const { cart }: any = useContext(CartContext);
 
   return (
